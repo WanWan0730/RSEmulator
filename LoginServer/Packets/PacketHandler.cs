@@ -22,6 +22,7 @@ namespace LoginServer
         {
             this.handlers[4103] = new ServerListPacket();
             this.handlers[4096] = this.handlers[4103];
+
             this.handlers[4097] = new LoginPacket();
         }
 

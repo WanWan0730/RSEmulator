@@ -33,23 +33,22 @@ namespace LoginServer
         {
             this.ExtractData();
 
-            UserModel user = new UserModel(this.username, this.password);
-
-            if (!user.IsLoggedIn())
-            {
-                user.RegisterUserLogin();
-            }
-
             LoginPacketResult loginResult = new LoginPacketResult();
             loginResult.SetPacketAndClient(packet, client);
-
-            const string fixedUsername = "moyka";
-            const string fixedPassword = "1234";
-            const string alreadyLoggedInUser = "moyka10";
-
-            if (this.password == fixedPassword && this.username == fixedUsername)
+            
+            UserModel user = new UserModel(this.username, this.password);
+            if (user.Exists())
             {
-                loginResult.SuccessfullyLoggedIn();
+                LoginModel usersLogin = new LoginModel(this.username, this.macAddress, this.serverName, this.client.clientID);
+                if (!usersLogin.IsLoggedIn())
+                {
+                    usersLogin.RegisterUserLogin();
+                    loginResult.SuccessfullyLoggedIn();
+                } else
+                {
+                    loginResult.AlreadyLoggedIn();
+                }
+
                 CharacterListPacket characterListPacket = new();
                 characterListPacket.SetPacketAndClient(packet, client);
                 characterListPacket.Run();
@@ -58,11 +57,6 @@ namespace LoginServer
             {
                 loginResult.InvalidCredentials();
             }
-            if (this.username == alreadyLoggedInUser)
-            {
-                loginResult.AlreadyLoggedIn();
-            }
-
 
         }
 

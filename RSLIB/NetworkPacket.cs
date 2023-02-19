@@ -10,7 +10,6 @@ namespace RSLIB
     public class NetworkPacket
     {
         private readonly uint[] EncryptionKey = new uint[] { 0x6F, 0x40 };
-        private readonly uint[] StringEncryptionSeed = new uint[] { 0x64, 0x64 };
         private const uint RANDOM_OFFSET = 0x7C;
         private const int PACKET_SIZE = 0x2;
         private const int DECODEKEY_SIZE = 0x4;

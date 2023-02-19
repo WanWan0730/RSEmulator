@@ -1,6 +1,7 @@
 ﻿using LoginServer.Packets.Send;
 using LoginServer.Settings;
 using RSLIB;
+using RSLIB.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,13 @@ namespace LoginServer
                         this.packetHandler.Execute(this.buffer, this);
                     } else
                     {
+                        try
+                        {
+                            DB database = new DB();
+                            database.Query($"DELETE FROM connected_users WHERE client_id = '{this.clientID}' LIMIT 1");
+                        } catch(Exception ex) {
+                            Log.Error($"{ex.Message}\n{ex.StackTrace}");
+                        }
                         this.server.RemoveClientByClientID(this.clientID);
                         Log.Warning($"[Server ID: {this.serverID}][Client ID: {this.clientID}] a client disconnected");
                         this.Close();

@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,28 +12,22 @@ namespace RSLIB.Database
     {
         private string username;
         private string password;
+        private string table = "users";
 
         public UserModel(string username, string password)
         {
             this.username = username;
             this.password = password;
+            this.SetTable(this.table);
         }
 
-        public Boolean IsLoggedIn() {
-            MySqlCommand query = new MySqlCommand($"SELECT * FROM connected_users WHERE username = '{this.username}' LIMIT 1", connection);
-            int count = query.ExecuteReader().RecordsAffected;
-            if (count > 0)
-            {
+        public Boolean Exists()
+        {
+            int total = Select($"username = '{this.username}' AND password = '{this.password}'", limit: 1).Count;
+            if ( total > 0 ) {
                 return true;
             }
             return false;
-        }
-
-        public void RegisterUserLogin()
-        {
-            connection.ClearAllPoolsAsync();
-            MySqlCommand query = new MySqlCommand($"INSERT INTO connected_users (username, password) VALUES ('{this.username}', '{this.password}')", connection);
-            query.ExecuteNonQuery();
         }
     }
 }

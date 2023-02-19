@@ -12,7 +12,7 @@ namespace LoginServer.Settings
         public static string[] IPS = {
             "127.0.0.1"
         };
-        public static string SERVER_NAME = "RS Community BR";
+        public static string SERVER_NAME = "Prandel";
         public static int SERVER_PORT = 55661;
         public static Int32 MAX_CONNECTIONS = 3;
     }

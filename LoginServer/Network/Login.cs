@@ -27,7 +27,7 @@ namespace LoginServer
                 if (IPAddress.TryParse(IP, out ipAdress))
                 {
                     IPEndPoint ipEndpoint = new IPEndPoint(ipAdress, Config.SERVER_PORT);
-                    this.clients = new Client[Config.MAX_CONNECTIONS];
+                    this.clients = new Client[Config.MAX_CONNECTIONS + 1];
                     for(Int32 i = 0; i < clients.Length; i++)
                     {
                         this.clients[i] = null;
@@ -61,7 +61,7 @@ namespace LoginServer
                         this.clients[newClientID] = new Client(newClient, this.ServerID, newClientID, this);
                     } else
                     {
-                        Log.Warning($"[{this.ServerID}] New connection refused, server full {clients.Length} of {Config.MAX_CONNECTIONS} clients connected now");
+                        Log.Warning($"[{this.ServerID}] New connection refused, server full {clients.Length - 1} of {Config.MAX_CONNECTIONS} clients connected now");
                         newClient.Close();
                         newClient = null;
                     }

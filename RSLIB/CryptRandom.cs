@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RSLIB
 {
-    internal class CryptRandom
+    public class CryptRandom
     {
         private uint Seed = 0;
         private const uint MULTIPLIER = 0x343FD;

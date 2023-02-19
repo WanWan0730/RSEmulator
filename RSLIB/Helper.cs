@@ -26,6 +26,31 @@ namespace RSLIB
             return reader.ReadBytes(size);
         }
 
+        public static ushort GetReadUint16(byte[] bytes)
+        {
+            MemoryStream stream = new MemoryStream(bytes);
+            BinaryReader reader = new BinaryReader(stream);
+            return reader.ReadUInt16();
+        }
+
+        public static byte[] GetBytesUntilNull(byte[] input)
+        {
+            int length = Array.IndexOf(input, (byte)0);
+            if (length < 0)
+            {
+                length = input.Length;
+            }
+            byte[] result = new byte[length];
+            Buffer.BlockCopy(input, 0, result, 0, length);
+            return result;
+        }
+
+        public static uint GetCipherID(string bytes)
+        {
+            NetworkPacket packetWorker = new NetworkPacket(HexStringToByte(bytes));
+            return packetWorker.cipherId;
+        }
+
         public static void SendPacketResponse(Socket socket, string data)
         {
             if (data != null)

@@ -32,7 +32,7 @@ namespace LoginServer
                 this.serverID= ServerID;
                 this.server = server;
                 this.clientID = ClientID;
-                Log.Success($"[Server ID: {this.serverID}][Client ID: {this.clientID}] New connected to the server!");
+                Log.Success($"[Server ID: {this.serverID}][Client ID: {this.clientID}] New client connected to the server!");
                 this.buffer = new byte[1024];
                 this.socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, this.WaitData, null);
 
@@ -53,12 +53,8 @@ namespace LoginServer
                     if (size > 0)
                     {
                         Array.Resize(ref this.buffer, size);
-
                         this.packetHandler = new PacketHandler();
                         this.packetHandler.Execute(this.buffer, this);
-
-                        //ServerListPacket serverList = new(Config.SERVER_NAME, this.socket);
-
                     } else
                     {
                         this.server.RemoveClientByClientID(this.clientID);

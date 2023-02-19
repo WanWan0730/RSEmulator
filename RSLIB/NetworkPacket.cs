@@ -28,6 +28,7 @@ namespace RSLIB
             cipherId = BitConverter.ToUInt16(decodeKeyBytes);
             cipher = Helper.JumpBytesFromBebin(cipher, DECODEKEY_SIZE);
         }
+  
         public byte[] Decrypt()
         {
             CryptRandom random = new CryptRandom(cipherId);

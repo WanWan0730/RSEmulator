@@ -19,7 +19,7 @@ namespace LoginServer
         public Socket? socket = null;
         public Int16 clientID = 0;
         public Byte serverID = 0;
-        public Login server;
+        public Login? server;
         public PacketHandler packetHandler = null;
 
         public byte[]? buffer = null;

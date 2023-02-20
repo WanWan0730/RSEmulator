@@ -49,9 +49,9 @@ namespace LoginServer
                     loginResult.AlreadyLoggedIn();
                 }
 
-                //CharacterListPacket characterListPacket = new();
-                //characterListPacket.SetPacketAndClient(packet, client);
-                //characterListPacket.Run();
+                CharacterListPacket characterListPacket = new();
+                characterListPacket.SetPacketAndClient(packet, client);
+                characterListPacket.Run();
             }
             else
             {

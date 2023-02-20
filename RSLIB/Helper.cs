@@ -11,6 +11,33 @@ namespace RSLIB
             return Enumerable.Range(0, hex.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(hex.Substring(x, 2), 16)).ToArray();
         }
 
+        public static byte[] FillLength(string value, int size)
+        {
+            byte[] valueByte = Encoding.UTF8.GetBytes(value);
+            byte[] bytes = new byte[size];
+            Boolean first = true;
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                if (i < value.Length)
+                {
+                    bytes[i] = valueByte[i];
+                }
+                else
+                {
+                    if (first)
+                    {
+                        bytes[i] = 0x00;
+                        first = false;
+                    }
+                    else
+                    {
+                        bytes[i] = 0xFF;
+                    }
+                }
+            }
+            return bytes;
+        }
+
         public static byte[] JumpBytesFromBebin(byte[] bytes, int size)
         {
             Array.Reverse(bytes);

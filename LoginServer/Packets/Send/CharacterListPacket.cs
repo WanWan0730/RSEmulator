@@ -1,4 +1,5 @@
 ﻿using LoginServer.Packets;
+using RSLIB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,42 @@ namespace LoginServer
 {
     public class CharacterListPacket : IPacketHandler
     {
-        private string packetString = "28 01 03 11 00 00 59 0D 00 00 41 72 71 75 65 69 72 61 00 00 00 00 00 00 00 00 00 00 09 00 01 00 F0 00 FF FF FF FF 00 00 31 32 37 2E 30 2E 30 2E 31 00 00 00 00 00 00 00 01 00 74 65 73 74 65 00 00 00 00 00 00 00 00 00 00 00 00 00 04 00 01 00 DA 00 FF FF FF FF 00 00 31 32 37 2E 30 2E 30 2E 31 00 00 00 00 00 00 00 02 00 31 32 33 31 32 33 00 00 00 00 00 00 00 00 00 00 00 00 0C 00 01 00 10 01 FF FF FF FF 00 00 31 32 37 2E 30 2E 30 2E 31 00 00 00 00 00 00 00 03 00 31 32 33 31 32 33 34 00 00 00 00 00 00 00 00 00 00 00 0E 00 01 00 20 01 FF FF FF FF 00 00 31 32 37 2E 30 2E 30 2E 31 00 00 00 00 00 00 00 04 00 61 73 64 61 73 64 00 00 00 00 00 00 00 00 00 00 00 00 07 00 01 00 FF FF FF FF FF FF 00 00 31 32 37 2E 30 2E 30 2E 31 00 00 00 00 00 00 00 05 00 61 61 61 61 61 61 61 61 61 61 61 61 61 61 61 61 00 00 01 00 01 00 C9 00 C2 00 FF FF 00 00 31 32 37 2E 30 2E 30 2E 31 00 00 00 00 00 00 00";
-
-        private string packetStringx = "28 01 03 11 00 00 BE 00 00 00 6E 6F 6D 65 6E 6F 6D 65 6E 6F 6D 65 6E 6F 6D 65 6E 6F 07 00 0F 01 00 07 F8 00 FF FF 00 00 31 39 32 2E 31 36 38 2E 31 36 30 2E 31 38 30 00 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
         private byte[] packet;
         private Client client;
 
-
-
         public void Run()
         {
-            byte[] charlist = RSLIB.Helper.HexStringToByte(this.packetString);
-            this.client.socket.Send(charlist);
+            List<byte> result= new List<byte>();
+
+
+            Character char1 = new Character("Moyka", RSLIB.Job.Archer, 0, 0, 409, 165, 1250, "192.168.0.5");
+            result.AddRange(char1.GetBytes());
+            //result.AddRange(Character.GetEmpty(true));
+
+            Character char2 = new Character("Jesuit", RSLIB.Job.Fallen, 1, 0xF0, 409, 165, 1057, "192.168.0.5");
+            result.AddRange(char2.GetBytes());
+            //result.AddRange(Character.GetEmpty());
+
+            //Character char3= new Character("Jesuit2", RSLIB.Job.Summoner, 2, 28, 409, 165, 450, "192.168.0.5");
+            //result.AddRange(char3.GetBytes());
+            result.AddRange(Character.GetEmpty());
+
+            //Character char4 = new Character("Jesui3t", RSLIB.Job.Opticalist, 3, 28, 409, 165, 450, "192.168.0.5");
+            //result.AddRange(char4.GetBytes());
+            result.AddRange(Character.GetEmpty());
+
+            //Character char5 = new Character("Jesuit4", RSLIB.Job.Magician, 4, 28, 409, 165, 450, "192.168.0.5");
+            //result.AddRange(char5.GetBytes());
+            result.AddRange(Character.GetEmpty());
+
+            //Character char6 = new Character("Jesuit333", RSLIB.Job.LittleWitch, 5, 28, 409, 165, 450, "192.168.0.5");
+            //result.AddRange(char6.GetBytes());
+            result.AddRange(Character.GetEmpty());
+
+
+            Log.Debug($"PACKET: {BitConverter.ToString(result.ToArray()).Replace("-", "")}");
+            //Log.Debug($"EMPTY PACKET: {BitConverter.ToString(empty.ToArray()).Replace("-", "")}");
+            this.client.socket.Send(result.ToArray());
         }
 
         public void SetPacketAndClient(byte[] packet, Client client)
@@ -31,27 +56,6 @@ namespace LoginServer
         }
     }
 }
-
-//Character class -> 1C | 28 [1byte]
-//00 Squire
-//01 Warrior
-//02 Magician
-//03 Wolf
-//04 Priest
-//05 Fallen
-//06 Theif
-//07 Monk
-//08 Lancer
-//09 Archer
-//0A Tamer
-//0B Summoner
-//0C Princess
-//0D Little Witch
-//0E Necromancer
-//0F Demon
-//10 Spiritualist
-//11 Champion
-//12 Opticalist
 
 //Char level little endian -> 1E | 30 [2bytes]
 

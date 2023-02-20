@@ -9,6 +9,7 @@ namespace LoginServer.Packets
     public interface IPacketHandler
     {
         public void SetPacketAndClient(byte[] packet, Client client);
+        public void SetClients(byte[] packet, Client[] client) {}
         public void Run();
     }
 }

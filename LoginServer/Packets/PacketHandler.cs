@@ -11,7 +11,7 @@ namespace LoginServer
 {
     public class PacketHandler
     {
-        private IPacketHandler[] handlers = new IPacketHandler[10000];
+        private IPacketHandler[] handlers = new IPacketHandler[20000];
 
         public PacketHandler()
         {
@@ -20,9 +20,9 @@ namespace LoginServer
 
         private void InitializeHandlers()
         {
+            this.handlers[9999] = new TestPacket();
             this.handlers[4103] = new ServerListPacket();
             this.handlers[4096] = this.handlers[4103];
-
             this.handlers[4097] = new LoginPacket();
         }
 
@@ -31,8 +31,15 @@ namespace LoginServer
             uint packetID = Helper.GetCipherID(Helper.BytesToString(packet));
             if (this.handlers[packetID] != null)
             {
-                this.handlers[packetID].SetPacketAndClient(packet, client);
-                this.handlers[packetID].Run();
+                if (packetID == 9999)
+                {
+                    this.handlers[packetID].SetClients(packet, client.server.clients);
+                    this.handlers[packetID].Run();
+                } else
+                {
+                    this.handlers[packetID].SetPacketAndClient(packet, client);
+                    this.handlers[packetID].Run();
+                }
             }
             else
             {

@@ -42,6 +42,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.decode_key_field = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.port_field = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ip_field = new System.Windows.Forms.TextBox();
+            this.send_data_button = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // crypted_field
@@ -168,11 +174,83 @@
             this.decode_key_field.Size = new System.Drawing.Size(109, 31);
             this.decode_key_field.TabIndex = 12;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 464);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(32, 17);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Port";
+            // 
+            // port_field
+            // 
+            this.port_field.AutoCompleteCustomSource.AddRange(new string[] {
+            "55661",
+            "54631",
+            "56621"});
+            this.port_field.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.port_field.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.port_field.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.port_field.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.port_field.Location = new System.Drawing.Point(12, 484);
+            this.port_field.Multiline = true;
+            this.port_field.Name = "port_field";
+            this.port_field.Size = new System.Drawing.Size(101, 31);
+            this.port_field.TabIndex = 14;
+            this.port_field.Text = "55661";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(127, 464);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(18, 17);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "IP";
+            // 
+            // ip_field
+            // 
+            this.ip_field.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.ip_field.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ip_field.Location = new System.Drawing.Point(127, 484);
+            this.ip_field.Multiline = true;
+            this.ip_field.Name = "ip_field";
+            this.ip_field.Size = new System.Drawing.Size(142, 31);
+            this.ip_field.TabIndex = 16;
+            this.ip_field.Text = "127.0.0.1";
+            // 
+            // send_data_button
+            // 
+            this.send_data_button.Location = new System.Drawing.Point(699, 490);
+            this.send_data_button.Name = "send_data_button";
+            this.send_data_button.Size = new System.Drawing.Size(89, 31);
+            this.send_data_button.TabIndex = 18;
+            this.send_data_button.Text = "Send Data";
+            this.send_data_button.UseVisualStyleBackColor = true;
+            this.send_data_button.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(275, 484);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(89, 31);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "Reconnect";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 495);
+            this.ClientSize = new System.Drawing.Size(800, 539);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.send_data_button);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.ip_field);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.port_field);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.decode_key_field);
             this.Controls.Add(this.label5);
@@ -210,5 +288,11 @@
         private Label label5;
         private Label label6;
         private TextBox decode_key_field;
+        private Label label7;
+        private TextBox port_field;
+        private Label label8;
+        private TextBox ip_field;
+        private Button send_data_button;
+        private Button button1;
     }
 }

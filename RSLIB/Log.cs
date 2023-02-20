@@ -43,6 +43,13 @@ namespace RSLIB
             Write(message);
             Console.ResetColor();
         }
+        public static void Packet(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.White;
+            Write(message);
+            Console.ResetColor();
+        }
         private static void Write(string message)
         {
             DateTime dateTime= DateTime.Now;

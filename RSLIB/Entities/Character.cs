@@ -72,20 +72,11 @@ namespace RSLIB
         public static byte[] GetEmpty(Boolean setHeader = false)
         {
             List<byte> emptyCharacter = new List<byte>();
-            if (setHeader)
+            if (setHeader == true)
             {
                 emptyCharacter.AddRange(emptyListHeaderBytes);
             }
-            emptyCharacter.Add(0xFF);
-            emptyCharacter.Add(0xFF);
-            emptyCharacter.AddRange(Helper.FillLength("", MAX_NAME_LEN));
-            emptyCharacter.AddRange(BitConverter.GetBytes((short)0));
-            emptyCharacter.AddRange(BitConverter.GetBytes((short)0));
-            emptyCharacter.AddRange(BitConverter.GetBytes((short)0x00));
-            emptyCharacter.AddRange(BitConverter.GetBytes((short)0x00));
-            emptyCharacter.AddRange(new byte[] { 0xFF, 0xFF });
-            emptyCharacter.AddRange(BitConverter.GetBytes((short)0));
-            emptyCharacter.AddRange(Helper.FillLength("",MAX_IP_LEN));
+            emptyCharacter.AddRange(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
             return emptyCharacter.ToArray();
         }
     }

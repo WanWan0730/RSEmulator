@@ -8,6 +8,6 @@ namespace LoginServer.Packets
 {
     public interface IPacketReceive
     {
-        public void SetPacketAndClient(byte[] packet, Client client);
+        public void SetPacketAndClient(Client client);
     }
 }

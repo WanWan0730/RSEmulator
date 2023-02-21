@@ -60,6 +60,23 @@ namespace RSLIB
             return reader.ReadUInt16();
         }
 
+        public static byte[] StringToByte(string value, int size)
+        {
+            byte[] valueBytes = Encoding.UTF8.GetBytes(value);
+            List<byte> result = new List<byte>();
+            for(int i = 0; i < size; i++)
+            {
+                if (i >= valueBytes.Length )
+                {
+                    result.Add(0x00);
+                } else
+                {
+                    result.Add(valueBytes[i]);
+                }
+            }
+            return result.ToArray();
+        }
+
         public static byte[] GetBytesUntilNull(byte[] input)
         {
             int length = Array.IndexOf(input, (byte)0);

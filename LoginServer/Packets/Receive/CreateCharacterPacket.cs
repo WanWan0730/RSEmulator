@@ -24,7 +24,7 @@ namespace LoginServer
             decrypted = Helper.JumpBytesFromBebin(decrypted, 8);
             string name = Encoding.UTF8.GetString(Helper.GetBytesUntilNull(Helper.GetBytesFromBegin(decrypted, 16)));
 
-            CharacterModel character = new CharacterModel(name, job[0], 1, 0, 0, 35, 35, this.client.username);
+            CharacterModel character = new CharacterModel(name, job[0], 1, 0, 433, 35, 35, this.client.username);
 
             if (character.NameInUse())
             {
@@ -32,11 +32,14 @@ namespace LoginServer
                 this.client.socket.Send(alreadyExistsResponse);
             } else
             {
-                Log.Info($"Personagem de nome {name} criado com sucesso");
+                int index = new CharacterModel().SelectCharacter(this.client.username).Count;
 
-                byte[] successCreatedCharacter = Convert.FromHexString("3C000411000000000000B40B000074657374653132333132330000000000000004000100BD00A500FFFFB1013139322E3136382E302E320000000000");
-                this.client.socket.Send(successCreatedCharacter);
+                Log.Debug($"Count: {(byte)index}");
+
                 character.SavePlayer();
+                CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, job[0], 35, 35, 433, "192.168.0.2", this.client);
+                createdResponse.Send();
+                Log.Info($"Personagem de nome {name} criado com sucesso");
             }
         }
 

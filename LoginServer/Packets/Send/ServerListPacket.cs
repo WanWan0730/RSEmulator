@@ -28,5 +28,9 @@ namespace LoginServer.Packets.Send
             this.client = client;
         }
 
+        public void SetPacketAndClient(Client client)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

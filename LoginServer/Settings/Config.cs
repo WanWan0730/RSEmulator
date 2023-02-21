@@ -14,6 +14,6 @@ namespace LoginServer.Settings
         };
         public static string SERVER_NAME = "Prandel";
         public static int SERVER_PORT = 55661;
-        public static Int32 MAX_CONNECTIONS = 3;
+        public static Int32 MAX_CONNECTIONS = 100;
     }
 }

@@ -34,7 +34,7 @@ namespace LoginServer
             this.ExtractData();
 
             LoginPacketResult loginResult = new LoginPacketResult();
-            loginResult.SetPacketAndClient(packet, client);
+            loginResult.SetPacketAndClient(client);
             
             UserModel user = new UserModel(this.username, this.password);
             if (user.Exists())

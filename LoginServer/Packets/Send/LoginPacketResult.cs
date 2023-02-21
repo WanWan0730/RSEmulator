@@ -9,7 +9,6 @@ namespace LoginServer.Packets.Send
 {
     internal class LoginPacketResult : IPacketReceive
     {
-        private byte[]? packet;
         private Client client;
 
         public void SuccessfullyLoggedIn()
@@ -30,9 +29,8 @@ namespace LoginServer.Packets.Send
             this.client.socket.Send(Helper.HexStringToByte(data));
         }
 
-        public void SetPacketAndClient(byte[] packet, Client client)
+        public void SetPacketAndClient(Client client)
         {
-            this.packet = packet;
             this.client = client;
         }
     }

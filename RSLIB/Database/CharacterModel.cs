@@ -50,6 +50,17 @@ namespace RSLIB.Database
             return Select($"username = '{username}'");
         }
 
+        public void DeletePlayerByName(string name)
+        {
+            this.name = name;
+            if (this.NameInUse())
+            {
+                List<Dictionary<string, object>> character =  Select($"name = '{name}'");
+                int id = (int)character[0]["id"];
+                Delete(id);
+            }
+        }
+
         public void SavePlayer()
         {
             Dictionary<string, object> character = new Dictionary<string, object>();

@@ -34,8 +34,6 @@ namespace LoginServer
             {
                 int index = new CharacterModel().SelectCharacter(this.client.username).Count;
 
-                Log.Debug($"Count: {(byte)index}");
-
                 character.SavePlayer();
                 CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, job[0], 35, 35, 433, "192.168.0.2", this.client);
                 createdResponse.Send();

@@ -34,20 +34,15 @@ namespace LoginServer
                 index++;
             }
 
-            for (int i = 0; i < CHARACTER_PER_ACCOUNT - characters.Count; i++)
+            if (characters.Count == 0)
             {
-                if (i == 0)
-                {
-                    Log.Debug("adicionanado header");
-                    result.AddRange(Character.GetEmpty(true));
-                }
-                else
-                {
-                    result.AddRange(Character.GetEmpty());
-                }
+                result.AddRange(Character.GetEmpty(true));
             }
 
-            Log.Packet($"NAO PRESTA { BitConverter.ToString(result.ToArray()).Replace("-", "") }");
+            for (int i = 0; i < ((CHARACTER_PER_ACCOUNT - characters.Count) - 1); i++)
+            {
+                result.AddRange(Character.GetEmpty());
+            }
 
             this.client.socket.Send(result.ToArray());
         }

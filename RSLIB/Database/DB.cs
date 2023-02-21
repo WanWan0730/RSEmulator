@@ -48,7 +48,7 @@ namespace RSLIB.Database
             using (MySqlConnection conn = new MySqlConnection(this.connectionString))
             {
                 conn.Open();
-                using (MySqlCommand command = new MySqlCommand($"DELETE FROM ", conn))
+                using (MySqlCommand command = new MySqlCommand($"DELETE FROM {this.tableName} WHERE id = '{id}'", conn))
                 {
                     command.ExecuteReader();
                 }

@@ -45,7 +45,7 @@ namespace RSLIB
             Array.Reverse(result);
             return result;
         }
-
+        
         public static byte[] GetBytesFromBegin(byte[] bytes, int size)
         {
             MemoryStream stream = new MemoryStream(bytes);

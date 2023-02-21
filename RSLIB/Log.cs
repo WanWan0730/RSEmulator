@@ -15,6 +15,7 @@ namespace RSLIB
             Write(message);
             Console.ResetColor();
         }
+        
         public static void Error(string message)
         {
             Console.BackgroundColor = ConsoleColor.Red;
@@ -43,11 +44,11 @@ namespace RSLIB
             Write(message);
             Console.ResetColor();
         }
-        public static void Packet(string message)
+        public static void Packet(byte[] message)
         {
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.White;
-            Write(message);
+            Write(BitConverter.ToString(message).Replace("-", ""));
             Console.ResetColor();
         }
         private static void Write(string message)

@@ -39,7 +39,6 @@ namespace LoginServer
 
         public void Send()
         {
-            Log.Debug(BitConverter.ToString(this.packet.ToArray()).Replace("-", ""));
             this.client.socket.Send(this.packet.ToArray());
         }
 

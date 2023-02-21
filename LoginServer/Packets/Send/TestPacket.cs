@@ -17,7 +17,7 @@ namespace LoginServer.Packets.Send
         {
             packet = Helper.JumpBytesFromBebin(packet, 0x4);
 
-            Log.Packet($"Chegou no run: client length: {clients?.Length}");
+            Log.Debug($"Chegou no run: client length: {clients?.Length}");
 
             for (int clientIndex = 0; clientIndex < clients?.Length; clientIndex++)
             {

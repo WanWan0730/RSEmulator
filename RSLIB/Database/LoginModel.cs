@@ -28,7 +28,7 @@ namespace RSLIB.Database
 
         public Boolean IsLoggedIn()
         {
-            int count = Select($"username = '{this.username}'", limit: 1).Count;
+            int count = Select($"username = '{this.username}'").Count;
             if (count > 0)
             {
                 return true;

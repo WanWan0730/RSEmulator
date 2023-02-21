@@ -21,6 +21,7 @@ namespace LoginServer
         public Byte serverID = 0;
         public Login? server;
         public PacketHandler packetHandler = null;
+        public string? username = null;
 
         public byte[]? buffer = null;
 

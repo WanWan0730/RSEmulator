@@ -23,7 +23,7 @@ namespace RSLIB.Database
 
         public Boolean Exists()
         {
-            int total = Select($"username = '{this.username}' AND password = '{this.password}'", limit: 1).Count;
+            int total = Select($"username = '{this.username}' AND password = '{this.password}'").Count;
             if ( total > 0 ) {
                 return true;
             }

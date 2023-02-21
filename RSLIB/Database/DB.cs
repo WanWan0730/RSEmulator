@@ -55,30 +55,27 @@ namespace RSLIB.Database
             }
         }
 
-        protected Dictionary<int, Dictionary<string, object>> Select(string search, int limit = 0, params string[] fields)
+        protected List<Dictionary<string, object>> Select(string search, params string[] fields)
         {
-            Dictionary<int, Dictionary<string, object>> results = new Dictionary<int, Dictionary<string, object>>();
+            List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
 
             string fieldsString = fields.Length == 0 ? "*" : string.Join(", ", fields);
-            string limitString = limit == 0 ? "" : $" LIMIT {limit}";
 
             using (MySqlConnection conn = new MySqlConnection(this.connectionString))
             {
                 conn.Open();
-                using (MySqlCommand command = new MySqlCommand($"SELECT {fieldsString} FROM {this.tableName} WHERE {search}{limitString}", conn))
+                using (MySqlCommand command = new MySqlCommand($"SELECT {fieldsString} FROM {this.tableName} WHERE {search}", conn))
                 {
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        int count = 0;
                         while (reader.Read())
                         {
-                            Dictionary<string, object> result = new Dictionary<string, object>();
+                            Dictionary<string, object> item= new Dictionary<string, object>();
                             for(int fieldIndex = 0; fieldIndex < reader.FieldCount; fieldIndex++)
                             {
-                                result.Add(reader.GetName(fieldIndex), reader[reader.GetName(fieldIndex)]);
+                                item.Add(reader.GetName(fieldIndex), reader.GetValue(fieldIndex));
                             }
-                            results.Add(count, result);
-                            count++;
+                            results.Add(item);
                         }
                     }
                 }

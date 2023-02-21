@@ -44,6 +44,7 @@ namespace LoginServer
                 {
                     usersLogin.RegisterUserLogin();
                     loginResult.SuccessfullyLoggedIn();
+                    this.client.username = this.username;
                 } else
                 {
                     loginResult.AlreadyLoggedIn();

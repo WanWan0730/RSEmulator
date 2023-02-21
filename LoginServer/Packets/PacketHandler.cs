@@ -24,6 +24,7 @@ namespace LoginServer
             this.handlers[4103] = new ServerListPacket();
             this.handlers[4096] = this.handlers[4103];
             this.handlers[4097] = new LoginPacket();
+            this.handlers[4100] = new CreateCharacterPacket();
         }
 
         public void Execute(byte[] packet, Client client)

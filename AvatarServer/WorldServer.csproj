@@ -15,4 +15,9 @@
     <ProjectReference Include="..\RSLIB\RSLIB.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Packets\Receive\" />
+    <Folder Include="Packets\Send\" />
+  </ItemGroup>
+
 </Project>

@@ -35,7 +35,7 @@ namespace LoginServer
                 int index = new CharacterModel().SelectCharacter(this.client.username).Count;
 
                 character.SavePlayer();
-                CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, job[0], 35, 35, 433, "192.168.0.2", this.client);
+                CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, job[0], 35, 35, 433, "127.0.0.1", this.client);
                 createdResponse.Send();
                 Log.Info($"Personagem de nome {name} criado com sucesso");
             }

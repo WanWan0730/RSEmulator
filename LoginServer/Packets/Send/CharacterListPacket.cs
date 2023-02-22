@@ -29,7 +29,7 @@ namespace LoginServer
                 short level = (short)Convert.ToInt32(character["level"]);
                 short location = (short)Convert.ToInt32(character["place_code"]);
 
-                result.AddRange(new Character(name, job, index, location, 409, 165, level, "192.168.0.5").GetBytes());
+                result.AddRange(new Character(name, job, index, location, 409, 165, level, "127.0.0.1").GetBytes());
                 index++;
             }
             if (characters.Count == 0)

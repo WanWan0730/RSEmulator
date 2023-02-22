@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginServer", "LoginServer\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSLIB", "RSLIB\RSLIB.csproj", "{FC2A1607-7346-4989-BD90-75B6EDF095E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldServer", "AvatarServer\WorldServer.csproj", "{48BCB7A4-27A7-4929-A297-2E83E484EDBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameServer", "AvatarServer\GameServer.csproj", "{48BCB7A4-27A7-4929-A297-2E83E484EDBC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS Packet Tool", "RS Packet Tool\RS Packet Tool.csproj", "{B718737B-4043-4A48-80D2-4BE6394CFB2D}"
 EndProject

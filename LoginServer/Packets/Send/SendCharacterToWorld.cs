@@ -20,7 +20,13 @@ namespace LoginServer
             byte[] decrytped = packetWorker.Decrypt();
             Log.Info($"Sending player to world: {Encoding.UTF8.GetString(decrytped)}");
 
-            this.client.socket.Send(new byte[] { 0x0C, 0x00, 0x09, 0x11, 0x00, 0x00, 0x00, 0x00, 0x85, 0x67, 0x00, 0x00 });
+            byte[] xpto = new byte[] { 0x0C, 0x00, 0x09, 0x11, 0x00, 0x00, 0x00, 0x00, 0xE8, 0xD7, 0x00, 0x00 };
+
+            Log.Debug("Enviando pacote pra entrar no mundo!");
+            Log.Packet(xpto);
+            this.client.socket.Send(xpto);
+            this.client.socket.Send(xpto);
+            this.client.socket.Send(xpto);
         }
 
         public void SetPacketAndClient(byte[] packet, Client client)

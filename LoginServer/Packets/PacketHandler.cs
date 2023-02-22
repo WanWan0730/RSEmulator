@@ -20,12 +20,12 @@ namespace LoginServer
 
         private void InitializeHandlers()
         {
-            this.handlers[9999] = new TestPacket();
             this.handlers[4103] = new ServerListPacket();
             this.handlers[4096] = this.handlers[4103];
             this.handlers[4097] = new LoginPacket();
             this.handlers[4100] = new CreateCharacterPacket();
             this.handlers[4101] = new CharacterDeletePacket();
+            this.handlers[4102] = new SendCharacterToWorld();
         }
 
         public void Execute(byte[] packet, Client client)
@@ -33,15 +33,8 @@ namespace LoginServer
             uint packetID = Helper.GetCipherID(Helper.BytesToString(packet));
             if (this.handlers[packetID] != null)
             {
-                if (packetID == 9999)
-                {
-                    this.handlers[packetID].SetClients(packet, client.server.clients);
-                    this.handlers[packetID].Run();
-                } else
-                {
-                    this.handlers[packetID].SetPacketAndClient(packet, client);
-                    this.handlers[packetID].Run();
-                }
+                this.handlers[packetID].SetPacketAndClient(packet, client);
+                this.handlers[packetID].Run();
             }
             else
             {

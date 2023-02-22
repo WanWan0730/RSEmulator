@@ -24,7 +24,7 @@ namespace RSLIB
         private byte job { get; set; }
         [IntegerValidator(MaxValue = 5, MinValue = 0)]
         private byte index { get; set; }
-        private byte location { get; set; }
+        private short location { get; set; }
         private int position_x { get; set; }
         private int position_y { get; set; }
         private short level { get; set; }
@@ -36,7 +36,7 @@ namespace RSLIB
         private static byte[] emptyListHeaderBytes = new byte[] { 0x28, 0x01, 0x03, 0x11, 0x00, 0x00, 0xEC, 0x01 };
         private List<byte> packetByteList = new List<byte>();
 
-        public Character(string name, byte job, byte index, byte location, int x, int y, short level, string ip)
+        public Character(string name, byte job, byte index, short location, int x, int y, short level, string ip)
         {
             this.name= name;
             this.ip= ip;

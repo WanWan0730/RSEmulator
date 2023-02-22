@@ -19,13 +19,11 @@ namespace LoginServer
         public void Run()
         {
             List<byte> result = new List<byte>();
-
             CharacterModel characterModel = new CharacterModel();
             List<Dictionary<string, object>> characters = characterModel.SelectCharacter(this.client.username);
             byte index = 0;
             foreach (Dictionary<string, object> character in characters)
             {
-
                 string name = character["name"].ToString();
                 byte job = (byte)Convert.ToInt32(character["job"]);
                 short level = (short)Convert.ToInt32(character["level"]);
@@ -33,17 +31,15 @@ namespace LoginServer
                 result.AddRange(new Character(name, job, index, 0, 409, 165, level, "192.168.0.5").GetBytes());
                 index++;
             }
-
             if (characters.Count == 0)
             {
                 result.AddRange(Character.GetEmpty(true));
             }
-
-            for (int i = 0; i < ((CHARACTER_PER_ACCOUNT - characters.Count) - 1); i++)
+            int amountOfEmptyToAdd = characters.Count == 0 ? CHARACTER_PER_ACCOUNT - 1 : CHARACTER_PER_ACCOUNT - characters.Count;
+            for (int i = 0; i < amountOfEmptyToAdd; i++)
             {
                 result.AddRange(Character.GetEmpty());
             }
-
             this.client.socket.Send(result.ToArray());
         }
 

@@ -20,6 +20,9 @@ namespace LoginServer
             byte[] decrytped = packetWorker.Decrypt();
             Log.Info($"Sending player to world: {Encoding.UTF8.GetString(decrytped)}");
             byte[] response = new byte[] { 0x0C, 0x00, 0x09, 0x11, 0x00, 0x00, 0x00, 0x00, 0xE8, 0xD7, 0x00, 0x00 };
+
+            Log.Packet(response);
+            Log.Debug($"SIZE: {response.Length}");
             this.client.socket.Send(response);
         }
 

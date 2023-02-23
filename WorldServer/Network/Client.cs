@@ -1,25 +1,30 @@
 ﻿using RSLIB;
+using RSLIB.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using WorldServer;
 
-namespace GameServer
+namespace WorldServer
 {
     public class Client
     {
+
         public Boolean active = false;
         public Socket? socket = null;
         public Int16 clientID = 0;
         public Byte serverID = 0;
-        public Game? server;
+        public World? server;
+        private PacketHandler packetHandler = null;
         public string? username = null;
 
         public byte[]? buffer = null;
 
-        public Client(Socket socket, Byte ServerID, Int16 ClientID, Game server)
+        public Client(Socket socket, Byte ServerID, Int16 ClientID, World server)
         {
             try
             {
@@ -49,11 +54,20 @@ namespace GameServer
                     if (size > 0)
                     {
                         Array.Resize(ref this.buffer, size);
-                        PacketHandler handler = new PacketHandler();
-                        handler.Execute(this.buffer, this);
+                        this.packetHandler = new PacketHandler();
+                        this.packetHandler.Execute(this.buffer, this);
                     }
                     else
                     {
+                        try
+                        {
+                            DB database = new DB();
+                            database.Query($"DELETE FROM connected_users WHERE client_id = '{this.clientID}' LIMIT 1");
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error($"{ex.Message}\n{ex.StackTrace}");
+                        }
                         this.server.RemoveClientByClientID(this.clientID);
                         Log.Warning($"[Server ID: {this.serverID}][Client ID: {this.clientID}] a client disconnected");
                         this.Close();
@@ -91,5 +105,6 @@ namespace GameServer
                 Log.Error($"{ex.Message}\n{ex.StackTrace}");
             }
         }
+
     }
 }

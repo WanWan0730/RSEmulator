@@ -38,6 +38,19 @@ namespace RSLIB
             return bytes;
         }
 
+        public static byte[] GetBytesFromRange(byte[] bytes, int offset, int length)
+        {
+            byte[] result = new byte[length];
+            Array.Copy(bytes, offset, result, 0, length);
+            return result;
+;        }
+        public static string GetStringFromRange(byte[] bytes, int offset, int length)
+        {
+            byte[] result = new byte[length];
+            Array.Copy(bytes, offset, result, 0, length);
+            return Encoding.UTF8.GetString(GetBytesUntilNull(result));
+        }
+
         public static byte[] JumpBytesFromBebin(byte[] bytes, int size)
         {
             Array.Reverse(bytes);

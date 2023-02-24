@@ -84,9 +84,9 @@ namespace RSLIB.Database
         }
 
 
-        public Dictionary<int, Dictionary<string, object>> Query(string query)
+        public List<Dictionary<string, object>> Query(string query)
         {
-            Dictionary<int, Dictionary<string, object>> results = new Dictionary<int, Dictionary<string, object>>();
+            List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
             using (MySqlConnection conn = new MySqlConnection(this.connectionString))
             {
                 conn.Open();
@@ -94,7 +94,6 @@ namespace RSLIB.Database
                 {
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        int count = 0;
                         while (reader.Read())
                         {
                             Dictionary<string, object> result = new Dictionary<string, object>();
@@ -102,8 +101,7 @@ namespace RSLIB.Database
                             {
                                 result.Add(reader.GetName(fieldIndex), reader[reader.GetName(fieldIndex)]);
                             }
-                            results.Add(count, result);
-                            count++;
+                            results.Add(result);
                         }
                     }
                 }

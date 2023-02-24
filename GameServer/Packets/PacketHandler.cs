@@ -21,8 +21,9 @@ namespace GameServer
         private void InitializeHandlers()
         {
 
+            this.handlers[4129] = new AccountJoinGameRequest();
+
             this.handlers[4287] = new RequestJoinGameResponse();
-            this.handlers[4129] = new ScenarioFileNameResponse();
 
 
             this.handlers[4130] = new MapInfoRequestPacket();

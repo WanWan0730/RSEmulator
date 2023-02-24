@@ -16,6 +16,7 @@ namespace GameServer
         public Byte serverID = 0;
         public Game? server;
         public string? username = null;
+        public Dictionary<string, object> avatar= new Dictionary<string, object>();
 
         public byte[]? buffer = null;
 

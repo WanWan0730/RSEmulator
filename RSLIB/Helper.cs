@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using Org.BouncyCastle.Utilities;
+using System.Net.Sockets;
 using System.Text;
 
 namespace RSLIB
@@ -120,6 +121,22 @@ namespace RSLIB
         public static string BytesToString(byte[] bytes)
         {
             return BitConverter.ToString(bytes).Replace("-", "");
+        }
+
+        public static byte[] DefineLengthAndInsertString(string value, int length)
+        {
+            List<byte> result = new List<byte>();   
+            byte[] data = Encoding.UTF8.GetBytes(value);
+            for(int index = 0; index < length; index++)
+            {
+                if ( index < data.Length) {
+                    result.Add(data[index]);
+                } else
+                {
+                    result.Add(0);
+                }
+            }
+            return result.ToArray();
         }
 
         public static string ReplaceBytes(string originalBytesString, string newValue, int startIndex, int size)

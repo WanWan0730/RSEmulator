@@ -1,5 +1,4 @@
-﻿using RSLIB;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using WorldServer.Settings;
 
 namespace WorldServer
@@ -10,10 +9,6 @@ namespace WorldServer
         {
             Console.Title = "RSEmu | World server";
             Config.servers = new World[Config.IPS.Length];
-
-            Skill teste = new Skill();
-
-
 
             for (byte i = 0; i < Config.servers.Length; i++)
             {

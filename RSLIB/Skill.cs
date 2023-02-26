@@ -9,7 +9,7 @@ namespace RSLIB
     public static class Skill
     {
 
-        public static byte[] GetSkillsBytesByJob(byte job)
+        public static byte[] GetSkillsBytesByJob(byte job, bool secondary = false)
         {
             int skills_per_job = 25;
             int begin = job * skills_per_job;
@@ -23,7 +23,14 @@ namespace RSLIB
 
                 result.AddRange(skill_index);
                 //Skill level
-                result.AddRange(new byte[]{0x01, 0x00});
+                if (index == begin && secondary == false)
+                {
+                    result.AddRange(new byte[]{0x01, 0x00});
+
+                }else
+                {
+                    result.AddRange(new byte[] { 0x00, 0x00 });
+                }
             }
             return result.ToArray();
         }

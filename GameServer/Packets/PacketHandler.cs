@@ -24,7 +24,7 @@ namespace GameServer
             this.handlers[4129] = new AccountJoinGameRequest();
             this.handlers[4287] = new RequestJoinGameResponse();
             this.handlers[4130] = new MapInfoRequestPacket();
-            this.handlers[4257] = new NPCInfoRequestPacket();
+            this.handlers[4257] = new AvatarInfoPacketResponse();
             
             this.handlers[4131] = new MovementPacket();
             this.handlers[4132] = new UnknowWalkPacketResponse();

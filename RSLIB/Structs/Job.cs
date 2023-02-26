@@ -55,6 +55,9 @@ namespace RSLIB
                 case Summoner: return Tamer;
                 case LittleWitch: return Princess;
                 case Demon: return Necromancer;
+                case Champion: return Spiritualist;
+                case Fallen: return Priest;
+
                 default: return Warrior;
 
             }

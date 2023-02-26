@@ -62,6 +62,7 @@ namespace GameServer
                     if (newClientID > 0)
                     {
                         clients[newClientID] = new Client(newClient, this.ServerID, newClientID, this);
+                        clients[newClientID].clients = this.clients;
                     }
                     else
                     {

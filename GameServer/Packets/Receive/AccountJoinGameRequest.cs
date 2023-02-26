@@ -21,8 +21,6 @@ namespace GameServer
             string avatar_name = RSLIB.Helper.GetStringFromRange(_packet, 32, 16);
             string mac_address = RSLIB.Helper.GetStringFromRange(_packet, 50, 17);
 
-            Log.Packet(_packet);
-
             this.client.avatar.Add("account_name", name);
             this.client.avatar.Add("avatar_name", avatar_name);
             this.client.avatar.Add("mac_address", mac_address);
@@ -44,6 +42,7 @@ namespace GameServer
             byte[] fileNameBytes = new byte[87];
             Array.Copy(fileName, 0, fileNameBytes, 0, fileName.Length);
             response.AddRange(fileNameBytes);
+            
             this.client.socket.Send(response.ToArray());
         }
 

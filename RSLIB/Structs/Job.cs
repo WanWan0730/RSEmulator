@@ -53,6 +53,8 @@ namespace RSLIB
                 case Monk: return Thief;
                 case Warrior: return Squire;
                 case Summoner: return Tamer;
+                case LittleWitch: return Princess;
+                case Demon: return Necromancer;
                 default: return Warrior;
 
             }

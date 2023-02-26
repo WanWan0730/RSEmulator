@@ -27,10 +27,10 @@ namespace GameServer
                 if (IPAddress.TryParse(IP, out ipAdress))
                 {
                     IPEndPoint ipEndpoint = new IPEndPoint(ipAdress, Config.SERVER_PORT);
-                    this.clients = new Client[Config.MAX_CONNECTIONS + 1];
+                    clients = new Client[Config.MAX_CONNECTIONS + 1];
                     for (Int32 i = 0; i < clients.Length; i++)
                     {
-                        this.clients[i] = null;
+                        clients[i] = null;
                     }
                     this.active = true;
                     this.ServerID = ServerID;
@@ -61,7 +61,7 @@ namespace GameServer
 
                     if (newClientID > 0)
                     {
-                        this.clients[newClientID] = new Client(newClient, this.ServerID, newClientID, this);
+                        clients[newClientID] = new Client(newClient, this.ServerID, newClientID, this);
                     }
                     else
                     {
@@ -86,16 +86,16 @@ namespace GameServer
 
         public void RemoveClientByClientID(Int16 clientID)
         {
-            this.clients[clientID] = null;
+            clients[clientID] = null;
         }
 
         private Int16 GetFreeClientID()
         {
             try
             {
-                for (Int16 i = 1; i < this.clients.Length; i++)
+                for (Int16 i = 1; i < clients.Length; i++)
                 {
-                    if (this.clients[i] == null)
+                    if (clients[i] == null)
                     {
                         return i;
                     }

@@ -20,6 +20,8 @@ namespace LoginServer
             NetworkPacket packetWorker = new NetworkPacket(packet);
             byte[] decrypted = packetWorker.Decrypt();
 
+            Log.Packet(decrypted);
+
             byte[] job = Helper.GetBytesFromBegin(decrypted, 1);
             decrypted = Helper.JumpBytesFromBebin(decrypted, 8);
             string name = Encoding.UTF8.GetString(Helper.GetBytesUntilNull(Helper.GetBytesFromBegin(decrypted, 16)));

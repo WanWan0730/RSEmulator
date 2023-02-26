@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RSLIB\RSLIB.csproj" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Packets\Send\" />
+    <ProjectReference Include="..\RSLIB\RSLIB.csproj" />
   </ItemGroup>
 
 </Project>

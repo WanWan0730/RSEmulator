@@ -21,6 +21,8 @@ namespace GameServer
             string avatar_name = RSLIB.Helper.GetStringFromRange(_packet, 32, 16);
             string mac_address = RSLIB.Helper.GetStringFromRange(_packet, 50, 17);
 
+            Log.Packet(_packet);
+
             this.client.avatar.Add("account_name", name);
             this.client.avatar.Add("avatar_name", avatar_name);
             this.client.avatar.Add("mac_address", mac_address);
@@ -29,7 +31,8 @@ namespace GameServer
             List<Dictionary<string, object>> characters = avatar.Query($"SELECT * FROM characters WHERE name = '{avatar_name}'");
             Dictionary<string, object> character = characters[0];
             string mapFileName = RSLIB.Structs.Map.GetMapFileNameBytesByNumber((int)character["place_code"]);
-            Log.Debug(mapFileName);
+
+            this.client.avatar.Add("job", character["job"]);
             List<byte> response = new List<byte>();
 
             //Header

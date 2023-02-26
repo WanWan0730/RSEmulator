@@ -39,6 +39,7 @@ namespace LoginServer
 
         public void Send()
         {
+            Log.Packet(this.packet.ToArray());
             this.client.socket.Send(this.packet.ToArray());
         }
 

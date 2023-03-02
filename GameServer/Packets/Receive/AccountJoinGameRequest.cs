@@ -31,6 +31,11 @@ namespace GameServer
             string mapFileName = RSLIB.Structs.Map.GetMapFileNameBytesByNumber((int)character["place_code"]);
 
             this.client.avatar.Add("job", character["job"]);
+            this.client.avatar.Add("pos_x", character["position_x"]);
+            this.client.avatar.Add("pos_y", character["position_y"]);
+
+           
+
             List<byte> response = new List<byte>();
 
             //Header
@@ -44,6 +49,23 @@ namespace GameServer
             response.AddRange(fileNameBytes);
             
             this.client.socket.Send(response.ToArray());
+
+
+            byte[] position_x = BitConverter.GetBytes((ushort)(((int)this.client.avatar["pos_x"] * 64) + 48));
+            byte[] position_y = BitConverter.GetBytes((ushort)(((int)this.client.avatar["pos_y"] * 32) + 16));
+            List<byte> toOthersData = new List<byte>();
+            toOthersData.AddRange(Convert.FromHexString("93 00 28 11 CD CD CD CD 03 00 00 00 47 00 22 11 00 00 CC CC FC 6B 00 40 F0 FF 83 05 00 80 00 00 51 01 00 C0 A1 8F 31 C8".Replace(" ", "")));
+            toOthersData.AddRange(position_x);
+            toOthersData.AddRange(position_y);
+            toOthersData.AddRange(Convert.FromHexString("00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 74 65 73 74 31 31 00 00 00 CC CC CC CC CC CC CC CC 20 00 B0 11 00 00 2C 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00 FF FF 00 C0 20 00 B0 11 00 00 2C 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 C0".Replace(" ", "")));
+
+            foreach (Client c in this.client.server.clients)
+            {
+                if (c != null && c.clientID != this.client.clientID)
+                {
+                    c.socket.Send(toOthersData.ToArray());
+                }
+            }
         }
 
         public void SetPacketAndClient(byte[] packet, Client client)

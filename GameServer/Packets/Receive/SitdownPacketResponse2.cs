@@ -1,32 +1,29 @@
 ﻿using GameServer.Packets;
-using RSLIB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GameServer
 {
-    public class RequestJoinGameResponse : IPacketHandler
+    public class SitdownPacketResponse2 : IPacketHandler
     {
         private byte[] packet;
         private Client client;
 
-        
         public void Run()
         {
-            this.client.socket.Send(Convert.FromHexString("1A 00 28 11 CD CD CD CD 02 00 00 00 06 00 3E 12 00 00 08 00 0C 12 00 00 00 80".Replace(" ", "")));
-            //this.client.socket.Send(new byte[] { 0x06, 0x00, 0x3E, 0x12, 0x00, 0x00 });
+
+            this.client.socket.Send(Convert.FromHexString("2C 00 28 11 CD CD CD CD 01 00 00 00 20 00 B0 11 00 00 2B 00 00 00 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 C0".Replace(" ", "")));
+
+            
         }
 
         public void SetPacketAndClient(byte[] packet, Client client)
         {
-            this.client = client;
             this.packet = packet;
+            this.client = client;
         }
     }
 }
-
-

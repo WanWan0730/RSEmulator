@@ -34,7 +34,7 @@ namespace GameServer
 
             //this.handlers[4153] = new UnknowWalkPacketResponse();
             //this.handlers[4258] = new UnknowWalkPacketResponse2();
-            //this.handlers[4137] = new LocalMessageRequestPacket();
+            this.handlers[4137] = new LocalMessageRequestPacket();
             //this.handlers[4156] = new SitdownPacketResponse();
             //Sem esses não carrega o mapa
 

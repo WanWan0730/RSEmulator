@@ -11,8 +11,6 @@ namespace LoginServer
     {
         static void Main(string[] args)
         {
-            Console.Title = "RSEmu | Login server";
-
             Dictionary<uint, INetworkPacketAdapter> handlers = new Dictionary<uint, INetworkPacketAdapter>();
 
             handlers.Add(4096, new ServerListPacket());
@@ -21,7 +19,7 @@ namespace LoginServer
             handlers.Add(4101, new CharacterDeletePacket());
             handlers.Add(4102, new SendCharacterToWorld());
 
-            Server login = new Server("127.0.0.1", 55661, "Login", 2);
+            Server login = new Server(Config.SERVER_IP, Config.SERVER_PORT, "RS Emulator | Login", 2);
             login.InitializeInterceptor(handlers);
 
             Process.GetCurrentProcess().WaitForExit();

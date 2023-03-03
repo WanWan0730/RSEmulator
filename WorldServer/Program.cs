@@ -8,16 +8,10 @@ namespace WorldServer
     {
         static void Main(string[] args)
         {
-            Console.Title = "RSEmu | World server";
-            Config.servers = new World[Config.IPS.Length];
+            Dictionary<uint, INetworkPacketAdapter> handlers = new Dictionary<uint, INetworkPacketAdapter>();
 
-            for (byte i = 0; i < Config.servers.Length; i++)
-            {
-                Config.servers[i] = new World(i, Config.IPS[i]);
-            }
-
-
-            //Server xpto = new Server()
+            Server login = new Server(Config.SERVER_IP, Config.SERVER_PORT, "RS Emulator | World", 2);
+            login.InitializeInterceptor(handlers);
 
             Process.GetCurrentProcess().WaitForExit();
         }

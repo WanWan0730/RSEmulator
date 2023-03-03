@@ -1,6 +1,7 @@
 ﻿using LoginServer.Packets;
 using RSLIB;
 using RSLIB.Database;
+using RSLIB.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +10,21 @@ using System.Threading.Tasks;
 
 namespace LoginServer
 {
-    public class CreateCharacterPacket : IPacketHandler
+    public class CharacterCreatePacket : INetworkPacketAdapter
     {
 
         private byte[] packet;
-        private Client client;
+        private RSLIB.Network.Client client;
+        private Server server;
 
-        public void Run()
+        private void Run()
         {
             NetworkPacket packetWorker = new NetworkPacket(packet);
             byte[] decrypted = packetWorker.Decrypt();
-
-            Log.Packet(decrypted);
-
             byte[] job = Helper.GetBytesFromBegin(decrypted, 1);
             decrypted = Helper.JumpBytesFromBebin(decrypted, 8);
             string name = Encoding.UTF8.GetString(Helper.GetBytesUntilNull(Helper.GetBytesFromBegin(decrypted, 16)));
-
-            CharacterModel character = new CharacterModel(name, job[0], 1, 0, 433, 35, 35, this.client.username);
+            CharacterModel character = new CharacterModel(name, job[0], 1, 0, 433, 35, 35, (string)this.client.info["username"]);
 
             if (character.NameInUse())
             {
@@ -34,19 +32,19 @@ namespace LoginServer
                 this.client.socket.Send(alreadyExistsResponse);
             } else
             {
-                int index = new CharacterModel().SelectCharacter(this.client.username).Count;
-
+                int index = new CharacterModel().SelectCharacter((string)this.client.info["username"]).Count;
                 character.SavePlayer();
                 CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, job[0], 35, 35, 433, "127.0.0.1", this.client);
                 createdResponse.Send();
-                Log.Info($"Personagem de nome {name} criado com sucesso");
             }
         }
 
-        public void SetPacketAndClient(byte[] packet, Client client)
+        public void SetParams(RSLIB.Network.Client client, Server server, byte[] buffer)
         {
-            this.packet= packet;
-            this.client= client;
+            this.client = client;
+            this.server = server;
+            this.packet = buffer;
+            this.Run();
         }
     }
 }

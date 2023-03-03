@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 
 namespace LoginServer
 {
-    public class CharacterListPacket : IPacketHandler
+    public class CharacterListPacket
     {
         private byte[] packet;
-        private Client client;
+        private RSLIB.Network.Client client;
         private const int CHARACTER_PER_ACCOUNT = 6;
         public void Run()
         {
             List<byte> result = new List<byte>();
             CharacterModel characterModel = new CharacterModel();
-            List<Dictionary<string, object>> characters = characterModel.SelectCharacter(this.client.username);
+            string username = (string)this.client.info["username"];
+            List<Dictionary<string, object>> characters = characterModel.SelectCharacter(username);
             byte index = 0;
             foreach (Dictionary<string, object> character in characters)
             {
@@ -28,8 +29,10 @@ namespace LoginServer
                 byte job = (byte)Convert.ToInt32(character["job"]);
                 short level = (short)Convert.ToInt32(character["level"]);
                 short location = (short)Convert.ToInt32(character["place_code"]);
+                short position_x = (short)Convert.ToInt32(character["position_x"]);
+                short position_y = (short)Convert.ToInt32(character["position_y"]);
 
-                result.AddRange(new Character(name, job, index, location, 2500, 2500, level, "127.0.0.1").GetBytes());
+                result.AddRange(new Character(name, job, index, location, position_x, position_y, level, "127.0.0.1").GetBytes());
                 index++;
             }
             if (characters.Count == 0)
@@ -44,7 +47,7 @@ namespace LoginServer
             this.client.socket.Send(result.ToArray());
         }
 
-        public void SetPacketAndClient(byte[] packet, Client client)
+        public void SetPacketAndClient(byte[] packet, RSLIB.Network.Client client)
         {
             this.packet = packet;
             this.client = client;

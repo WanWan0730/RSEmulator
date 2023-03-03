@@ -13,11 +13,11 @@ namespace RSLIB.Database
         private string username;
         private string mac_address;
         private string server_name;
-        private int client_id;
+        private string client_id;
 
         private string tableName = "connected_users";
 
-        public LoginModel(string username, string mac_address, string server_name, int clientID)
+        public LoginModel(string username, string mac_address, string server_name, string clientID)
         {
             this.username = username;
             this.mac_address= mac_address;

@@ -63,8 +63,7 @@ namespace WorldServer
                     if (newClientID > 0)
                     {
                         this.clients[newClientID] = new Client(newClient, this.ServerID, newClientID, this);
-                    }
-                    else
+                    } else
                     {
                         Log.Warning($"[{this.ServerID}] New connection refused, server full {clients.Length - 1} of {Config.MAX_CONNECTIONS} clients connected now");
                         newClient.Close();

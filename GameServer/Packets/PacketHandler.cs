@@ -38,9 +38,6 @@ namespace GameServer
             //this.handlers[4156] = new SitdownPacketResponse();
             //Sem esses não carrega o mapa
 
-
-
-
         }
 
 

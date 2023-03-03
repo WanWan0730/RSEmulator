@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using RSLIB.Network;
+using System.Diagnostics;
 using WorldServer.Settings;
 
 namespace WorldServer
@@ -14,6 +15,9 @@ namespace WorldServer
             {
                 Config.servers[i] = new World(i, Config.IPS[i]);
             }
+
+
+            //Server xpto = new Server()
 
             Process.GetCurrentProcess().WaitForExit();
         }

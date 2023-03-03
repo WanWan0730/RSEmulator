@@ -3,6 +3,7 @@ using LoginServer.Packets.Send;
 using Org.BouncyCastle.Crypto.Generators;
 using RSLIB;
 using RSLIB.Database;
+using RSLIB.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LoginServer
 {
-    public class LoginPacket : IPacketHandler
+    public class LoginPacket : INetworkPacketAdapter
     {
         const int CREDENTIAL_SIZE = 20;
         const int SERVER_NAME_SIZE = 18;
@@ -27,9 +28,19 @@ namespace LoginServer
         public string? password;
 
         private byte[] packet = new byte[0];
-        private Client? client;
+        private RSLIB.Network.Client client;
+        private RSLIB.Network.Server server;
 
-        public void Run()
+        public void SetParams(RSLIB.Network.Client client, Server server, byte[] buffer)
+        {
+            this.client = client;
+            this.server = server;
+            this.packet = buffer;
+
+            this.Run();
+        }
+
+        private void Run()
         {
             this.ExtractData();
 
@@ -39,19 +50,19 @@ namespace LoginServer
             UserModel user = new UserModel(this.username, this.password);
             if (user.Exists())
             {
-                LoginModel usersLogin = new LoginModel(this.username, this.macAddress, this.serverName, this.client.clientID);
+                LoginModel usersLogin = new LoginModel(this.username, this.macAddress, this.serverName, this.client.id);
+                this.client.info.TryAdd("username", this.username);
                 if (!usersLogin.IsLoggedIn())
                 {
                     usersLogin.RegisterUserLogin();
                     loginResult.SuccessfullyLoggedIn();
-                    this.client.username = this.username;
                 } else
                 {
                     loginResult.AlreadyLoggedIn();
                 }
 
                 CharacterListPacket characterListPacket = new();
-                characterListPacket.SetPacketAndClient(packet, client);
+                characterListPacket.SetPacketAndClient(packet, this.client);
                 characterListPacket.Run();
             }
             else
@@ -60,12 +71,8 @@ namespace LoginServer
             }
 
         }
-
-        public void SetPacketAndClient(byte[] packet, Client client)
-        {
-            this.packet = packet;
-            this.client = client;
-        }
+        
+       
 
         private void ExtractData()
         {
@@ -111,5 +118,7 @@ namespace LoginServer
             }
             return Helper.GetBytesUntilNull(decoded.ToArray());
         }
+
+        
     }
 }

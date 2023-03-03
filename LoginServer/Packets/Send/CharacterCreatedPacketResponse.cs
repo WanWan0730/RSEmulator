@@ -10,7 +10,7 @@ namespace LoginServer
     internal class CharacterCreatedPacketResponse
     {
         private List<Byte> packet;
-        private Client client;
+        private RSLIB.Network.Client client;
 
         private const int IP_MAX_LEN = 15;
         private const int NAME_MAX_LEN = 16;
@@ -23,7 +23,7 @@ namespace LoginServer
         private ushort map;
         private string ip;
 
-        public CharacterCreatedPacketResponse(byte index, string name, byte job, byte location_x, byte location_y, ushort map, string ip, Client client)
+        public CharacterCreatedPacketResponse(byte index, string name, byte job, byte location_x, byte location_y, ushort map, string ip, RSLIB.Network.Client client)
         {
             this.index = index;
             this.name = name;
@@ -39,7 +39,6 @@ namespace LoginServer
 
         public void Send()
         {
-            Log.Packet(this.packet.ToArray());
             this.client.socket.Send(this.packet.ToArray());
         }
 

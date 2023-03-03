@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace LoginServer.Packets.Send
 {
-    internal class LoginPacketResult : IPacketReceive
+    internal class LoginPacketResult
     {
-        private Client client;
+        private RSLIB.Network.Client client;
 
         public void SuccessfullyLoggedIn()
         {
@@ -29,7 +30,7 @@ namespace LoginServer.Packets.Send
             this.client.socket.Send(Helper.HexStringToByte(data));
         }
 
-        public void SetPacketAndClient(Client client)
+        public void SetPacketAndClient(RSLIB.Network.Client client)
         {
             this.client = client;
         }

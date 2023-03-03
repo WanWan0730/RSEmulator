@@ -1,5 +1,6 @@
 ﻿using GameServer.Packets.Send;
 using RSLIB;
+using RSLIB.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace GameServer.Packets.Receive
 {
-    internal class LocalMessageRequestPacket : IPacketHandler
+    internal class LocalMessageRequestPacket : INetworkPacketAdapter
     {
         private byte[] packet;
         private Client client;
-        private Client[] clients;
+        private Server server;
 
-        public void Run()
+        private void Run()
         {
             string msg = Helper.GetStringFromRange(packet, 26, packet.Length - 26);
 
@@ -29,25 +30,12 @@ namespace GameServer.Packets.Receive
 
         }
 
-        public void SetPacketAndClient(byte[] packet, Client client)
+        public void SetParams(Client client, Server server, byte[] buffer)
         {
+            this.packet = buffer;
             this.client = client;
-            this.packet = packet;
-        }
-
-        private byte[] DecodeLoginString(ushort securityCode, byte[] str)
-        {
-            const uint EncryptionSeed = 0x64;
-            var rand = new CryptRandom(securityCode);
-            uint range = securityCode % EncryptionSeed + EncryptionSeed;
-            uint sum = 0;
-            List<byte> decoded = new List<byte>();
-            foreach (byte b in str)
-            {
-                sum += b;
-                decoded.Add((byte)(b - (byte)rand.Next(range)));
-            }
-            return Helper.GetBytesUntilNull(decoded.ToArray());
+            this.server = server;
+            this.Run();
         }
 
     }

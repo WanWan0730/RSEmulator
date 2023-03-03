@@ -12,7 +12,7 @@ namespace RSLIB.Network
     {
         private Socket socket;
         private Boolean running = false;
-        private Dictionary<string, Client> clients = new Dictionary<string, Client>();
+        public Dictionary<string, Client> clients = new Dictionary<string, Client>();
         private string prefix;
         private string IP;
         private int PORT;

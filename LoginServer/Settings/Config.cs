@@ -10,7 +10,7 @@ namespace LoginServer.Settings
     {
         public static string SERVER_NAME = "RS Community";
         public static string SERVER_IP = "127.0.0.1";
-        public static int SERVER_PORT = 56621;
+        public static int SERVER_PORT = 55661;
 
     }
 }

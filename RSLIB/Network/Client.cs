@@ -11,7 +11,7 @@ namespace RSLIB.Network
     {
         public Socket socket;
         public string id;
-        private Server server;
+        public Server server;
         private Boolean running;
         private byte[] buffer = new byte[1024];
         public Dictionary<string, object> info = new Dictionary<string, object>();

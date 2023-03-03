@@ -1,5 +1,6 @@
 ﻿using GameServer.Packets;
 using RSLIB;
+using RSLIB.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +9,30 @@ using System.Threading.Tasks;
 
 namespace GameServer
 {
-    public class AvatarInfoPacketResponse :IPacketHandler
+    public class AvatarInfoPacketResponse : INetworkPacketAdapter
     {
-        private byte[] _packet;
+        private byte[] packet;
         private Client client;
+        private Server server;
 
-        public void Run()
+        private void Run()
         {
             
             List<byte> avatarData = new List<byte>();
 
-            byte.TryParse(this.client.avatar["job"].ToString(), out byte jobByte);
+            byte.TryParse(this.client.info["job"].ToString(), out byte jobByte);
 
             byte[] first_job = Skill.GetSkillsBytesByJob(jobByte);
 
             byte[] second_job = Skill.GetSkillsBytesByJob(Job.GetTransformJob(jobByte), true);
 
-            byte[] position_x = BitConverter.GetBytes((ushort)(((int)this.client.avatar["pos_x"] * 64) + 48));
-            byte[] position_y = BitConverter.GetBytes((ushort)(((int)this.client.avatar["pos_y"] * 32) + 16));
+            byte[] position_x = BitConverter.GetBytes((ushort)(((int)this.client.info["pos_x"] * 64) + 48));
+            byte[] position_y = BitConverter.GetBytes((ushort)(((int)this.client.info["pos_y"] * 32) + 16));
 
 
             avatarData.AddRange(Convert.FromHexString("90 08 3D 12 00 00 00 00 1C 02 00 00 00 00 00 00 00 00 00 00 EC 13 00 00 B8 0B 00 00 FF FF 05 00 00 00 00 00 64 00 64 00 19 00 0F 00 14 00 0A 00 05 00 0F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 74 65 6D 70 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00".Replace(" ", "")));
 
-            avatarData.AddRange(Helper.DefineLengthAndInsertString((string)client.avatar["avatar_name"], 18));
+            avatarData.AddRange(Helper.DefineLengthAndInsertString((string)client.info["avatar_name"], 18));
             avatarData.Add(jobByte);
 
             avatarData.AddRange(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
@@ -51,10 +53,12 @@ namespace GameServer
 
         }
 
-        public void SetPacketAndClient(byte[] packet, Client client)
+        public void SetParams(Client client, Server server, byte[] buffer)
         {
-            this._packet = packet;
             this.client = client;
+            this.server = server;
+            this.packet = buffer;
+            this.Run();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RSLIB.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,20 +7,23 @@ using System.Threading.Tasks;
 
 namespace GameServer.Packets.Receive
 {
-    public class TurnOnRunPacketResponse : IPacketHandler
+    public class TurnOnRunPacketResponse : INetworkPacketAdapter
     {
-        private byte[] _packet;
-        private Client Client_client;
+        private byte[] packet;
+        private Client client;
+        private Server server;
 
-        public void Run()
+        private void Run()
         {
-            this.Client_client.socket.Send(Convert.FromHexString("14 00 28 11 CD CD CD CD 01 00 00 00 08 00 2D 11 00 00 91 01".Replace(" ", "")));
+            this.client.socket.Send(Convert.FromHexString("14 00 28 11 CD CD CD CD 01 00 00 00 08 00 2D 11 00 00 91 01".Replace(" ", "")));
         }
 
-        public void SetPacketAndClient(byte[] packet, Client client)
+        public void SetParams(Client client, Server server, byte[] buffer)
         {
-            this._packet = packet;
-            Client_client = client;
+            this.packet = buffer;
+            this.client = client;
+            this.server = server;
+            this.Run();
         }
     }
 }

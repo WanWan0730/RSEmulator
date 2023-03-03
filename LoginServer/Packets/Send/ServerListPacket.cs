@@ -1,5 +1,5 @@
-﻿using LoginServer.Settings;
-using RSLIB.Network;
+﻿using RSLIB.Network;
+using RSLIB.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;

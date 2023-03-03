@@ -1,5 +1,4 @@
 ﻿using LoginServer.Packets.Send;
-using LoginServer.Settings;
 using RSLIB;
 using RSLIB.Network;
 using System.Diagnostics;

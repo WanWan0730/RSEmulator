@@ -8,6 +8,7 @@ namespace RSLIB.Settings
 {
     public static class Config
     {
+        public static string SERVER_NAME = "Community";
         public static string GAME_SERVER_IP = "127.0.0.1";
         public static string LOGIN_SERVER_IP = "127.0.0.1";
         public static string WORLD_SERVER_IP = "127.0.0.1";

@@ -4,6 +4,7 @@ using RSLIB;
 using RSLIB.Network;
 using System.Diagnostics;
 using System.Text;
+using RSLIB.Settings;
 
 namespace LoginServer
 {
@@ -19,7 +20,7 @@ namespace LoginServer
             handlers.Add(4101, new CharacterDeletePacket());
             handlers.Add(4102, new SendCharacterToWorld());
 
-            Server login = new Server(Config.SERVER_IP, Config.SERVER_PORT, "RS Emulator | Login", 2);
+            Server login = new Server(Config.LOGIN_SERVER_IP, Config.LOGIN_SERVER_PORT, "RS Emulator | Login", Config.CONNECTIONS_LIMIT);
             login.InitializeInterceptor(handlers);
 
             Process.GetCurrentProcess().WaitForExit();

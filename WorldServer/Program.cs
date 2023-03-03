@@ -1,6 +1,6 @@
 ﻿using RSLIB.Network;
 using System.Diagnostics;
-using WorldServer.Settings;
+using RSLIB.Settings;
 
 namespace WorldServer
 {
@@ -10,8 +10,8 @@ namespace WorldServer
         {
             Dictionary<uint, INetworkPacketAdapter> handlers = new Dictionary<uint, INetworkPacketAdapter>();
 
-            Server login = new Server(Config.SERVER_IP, Config.SERVER_PORT, "RS Emulator | World", 2);
-            login.InitializeInterceptor(handlers);
+            Server world = new Server(Config.WORLD_SERVER_IP, Config.WORLD_SERVER_PORT, "RS Emulator | World", Config.CONNECTIONS_LIMIT);
+            world.InitializeInterceptor(handlers);
 
             Process.GetCurrentProcess().WaitForExit();
         }

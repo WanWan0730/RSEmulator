@@ -1,7 +1,7 @@
 ﻿using GameServer.Packets.Receive;
-using GameServer.Settings;
 using RSLIB.Network;
 using System.Diagnostics;
+using RSLIB.Settings;
 
 namespace GameServer
 {
@@ -21,8 +21,8 @@ namespace GameServer
             handlers.Add(4136, new UpdateObjectsPacket());
             handlers.Add(4137, new LocalMessageRequestPacket());
 
-            Server login = new Server(Config.SERVER_IP, Config.SERVER_PORT, "RS Emulator | Game", 2);
-            login.InitializeInterceptor(handlers);
+            Server game = new Server(Config.GAME_SERVER_IP, Config.GAME_SERVER_PORT, "RS Emulator | Game", Config.CONNECTIONS_LIMIT);
+            game.InitializeInterceptor(handlers);
 
             Process.GetCurrentProcess().WaitForExit();
         }

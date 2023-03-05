@@ -19,7 +19,7 @@ namespace LoginServer
         
         private void Run()
         {
-            NetworkPacket packetWorker = new NetworkPacket(packet);
+            NetworkSecurity packetWorker = new NetworkSecurity(packet);
             byte[] decrypted = packetWorker.Decrypt();
 
             decrypted = Helper.JumpBytesFromBebin(decrypted, 6);

@@ -76,7 +76,7 @@ namespace LoginServer
 
         private void ExtractData()
         {
-            NetworkPacket packetWorker = new NetworkPacket(packet);
+            NetworkSecurity packetWorker = new NetworkSecurity(packet);
             byte[] decrypted = packetWorker.Decrypt();
 
             this.clientVersion = Helper.GetReadUint16(decrypted);

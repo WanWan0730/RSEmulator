@@ -105,7 +105,7 @@ namespace RSLIB
 
         public static uint GetCipherID(string bytes)
         {
-            NetworkPacket packetWorker = new NetworkPacket(HexStringToByte(bytes));
+            NetworkSecurity packetWorker = new NetworkSecurity(HexStringToByte(bytes));
             return packetWorker.cipherId;
         }
 

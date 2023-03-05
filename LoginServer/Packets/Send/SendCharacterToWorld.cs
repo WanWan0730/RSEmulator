@@ -17,7 +17,7 @@ namespace LoginServer
 
         private void Run()
         {
-            NetworkPacket packetWorker = new NetworkPacket(packet);
+            NetworkSecurity packetWorker = new NetworkSecurity(packet);
             byte[] decrytped = packetWorker.Decrypt();
             
             byte[] response = new byte[] { 0x0C, 0x00, 0x09, 0x11, 0x00, 0x00, 0x00, 0x00, 0xE8, 0xD7, 0x00, 0x00 };

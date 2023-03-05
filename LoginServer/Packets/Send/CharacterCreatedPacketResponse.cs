@@ -22,8 +22,9 @@ namespace LoginServer
         private byte location_y;
         private ushort map;
         private string ip;
+        private ushort level;
 
-        public CharacterCreatedPacketResponse(byte index, string name, byte job, byte location_x, byte location_y, ushort map, string ip, RSLIB.Network.Client client)
+        public CharacterCreatedPacketResponse(byte index, string name, ushort level, byte job, byte location_x, byte location_y, ushort map, string ip, RSLIB.Network.Client client)
         {
             this.index = index;
             this.name = name;
@@ -34,6 +35,7 @@ namespace LoginServer
             this.ip = ip;
             this.packet = new List<byte>();
             this.client = client;
+            this.level = level;
             this.PreparePacket();
         }
 
@@ -49,8 +51,7 @@ namespace LoginServer
             this.packet.AddRange(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 });
             this.packet.AddRange(Helper.StringToByte(this.name, NAME_MAX_LEN));
             this.packet.AddRange(new byte[] { 0x00, 0x00, this.job, 0x00 });
-            this.packet.Add(0x01);
-            this.packet.Add(0x00);
+            this.packet.AddRange(BitConverter.GetBytes(this.level));
             this.packet.AddRange(new byte[] { 0x98, 0x00 });
             this.packet.AddRange(new byte[] { 0xA5, 0x00, 0xFF, 0xFF });
             this.packet.AddRange(BitConverter.GetBytes(this.map));

@@ -36,10 +36,16 @@ namespace LoginServer
             } else
             {
                 var index = db?.Avatars?.Where(context => context.Username == username).Count();
-                db?.Avatars?.Add(new RSLIB.Database.Models.Avatar { Name = name, Job = job[0], Level = 1, LastField = 433, PositionX = 70, PositionY = 79, Username = username });
+
+                ushort field = 433;
+                byte x = 8;
+                byte y = 19;
+                ushort level = 25;
+
+                db?.Avatars?.Add(new RSLIB.Database.Models.Avatar { Name = name, Job = job[0], Level = 1, LastField = field, PositionX = x, PositionY = y, Username = username });
                 db?.SaveChanges();
                 
-                CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, job[0], 35, 35, 433, "127.0.0.1", this.client);
+                CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, level, job[0], x, y, field, "127.0.0.1", this.client);
                 createdResponse.Send();
             }
         }

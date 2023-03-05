@@ -14,6 +14,7 @@ namespace LoginServer
             Dictionary<uint, INetworkPacketAdapter> handlers = new Dictionary<uint, INetworkPacketAdapter>();
 
             handlers.Add(4096, new ServerListPacket());
+            handlers.Add(4103, new ServerListPacket());
             handlers.Add(4097, new LoginPacket());
             handlers.Add(4100, new CharacterCreatePacket());
             handlers.Add(4101, new CharacterDeletePacket());

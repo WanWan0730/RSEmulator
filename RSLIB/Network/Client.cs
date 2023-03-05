@@ -25,7 +25,8 @@ namespace RSLIB.Network
             this.id = id;
             this.server= server;
 
-            Log.Info($"Client id {this.id} connected to the server");
+            
+            Log.Info($"[{this.socket.RemoteEndPoint}] Client id {this.id} connected to the server");
 
             this.socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, this.HandleData, null);
         }
@@ -46,12 +47,12 @@ namespace RSLIB.Network
                             adapter.SetParams(this, this.server, this.buffer);
                         } else
                         {
-                           Log.Warning($"[{PacketID}] Network packet not implemented.\n{Helper.BytesToString(this.buffer)}");
+                           Log.Warning($"[{PacketID}] [{this.buffer.Length}] Network packet not implemented.\n{Helper.BytesToString(this.buffer)}");
                         }
                     } else
                     {
                         this.server.RemoveClient(this.id);
-                        Log.Info($"Client id {this.id} disconnected");
+                        Log.Info($"[{this.socket.RemoteEndPoint}] Client id {this.id} disconnected");
                         this.running = false;
                         this.socket.Close();
                     }

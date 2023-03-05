@@ -5,8 +5,8 @@ using RSLIB.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LoginServer
 {
@@ -24,16 +24,21 @@ namespace LoginServer
             byte[] job = Helper.GetBytesFromBegin(decrypted, 1);
             decrypted = Helper.JumpBytesFromBebin(decrypted, 8);
             string name = Encoding.UTF8.GetString(Helper.GetBytesUntilNull(Helper.GetBytesFromBegin(decrypted, 16)));
-            CharacterModel character = new CharacterModel(name, job[0], 1, 0, 433, 35, 35, (string)this.client.info["username"]);
+            string username = (string)this.client.info["username"];
+            using var db = new RedStoneContext();
 
-            if (character.NameInUse())
+            var avatar = db?.Avatars?.Where(context => context.Name == name).FirstOrDefault();
+
+            if (avatar != null)
             {
                 byte[] alreadyExistsResponse = Convert.FromHexString("3C000411000002000000A72E0000454D50545900000000000000000000000000FFFF000000000000000000003139322E3136382E302E320000000000");
                 this.client.socket.Send(alreadyExistsResponse);
             } else
             {
-                int index = new CharacterModel().SelectCharacter((string)this.client.info["username"]).Count;
-                character.SavePlayer();
+                var index = db?.Avatars?.Where(context => context.Username == username).Count();
+                db?.Avatars?.Add(new RSLIB.Database.Models.Avatar { Name = name, Job = job[0], Level = 1, LastField = 433, PositionX = 70, PositionY = 79, Username = username });
+                db?.SaveChanges();
+                
                 CharacterCreatedPacketResponse createdResponse = new CharacterCreatedPacketResponse((byte)index, name, job[0], 35, 35, 433, "127.0.0.1", this.client);
                 createdResponse.Send();
             }

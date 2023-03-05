@@ -3,6 +3,7 @@ using LoginServer.Packets.Send;
 using Org.BouncyCastle.Crypto.Generators;
 using RSLIB;
 using RSLIB.Database;
+using RSLIB.Database.Models;
 using RSLIB.Network;
 using System;
 using System.Collections.Generic;
@@ -46,15 +47,20 @@ namespace LoginServer
 
             LoginPacketResult loginResult = new LoginPacketResult();
             loginResult.SetPacketAndClient(client);
+
+            using var db = new RedStoneContext();
             
-            UserModel user = new UserModel(this.username, this.password);
-            if (user.Exists())
+            var user = db?.Users?.Where(context => context.Username == this.username).FirstOrDefault();
+            
+            if (user != null)
             {
-                LoginModel usersLogin = new LoginModel(this.username, this.macAddress, this.serverName, this.client.id);
+                var session = db?.Sessions?.Where(context => context.Username!= this.username).FirstOrDefault();
+
                 this.client.info.TryAdd("username", this.username);
-                if (!usersLogin.IsLoggedIn())
+                if (session == null)
                 {
-                    usersLogin.RegisterUserLogin();
+                    db?.Sessions?.Add(new Session { Username = this.username, ClientId = this.client.id, ServerName = this.serverName, MacAddress = this.macAddress });
+                    db.SaveChanges();
                     loginResult.SuccessfullyLoggedIn();
                 } else
                 {

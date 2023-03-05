@@ -25,8 +25,14 @@ namespace LoginServer
             decrypted = Helper.JumpBytesFromBebin(decrypted, 6);
             string decrypted_name = Encoding.UTF8.GetString(Helper.GetBytesUntilNull(Helper.GetBytesFromBegin(decrypted, 16)));
 
-            CharacterModel characterModel = new CharacterModel();
-            characterModel.DeletePlayerByName(decrypted_name);
+            using var db = new RedStoneContext();
+
+            var avatar = db.Avatars.Where(context => context.Name == decrypted_name).FirstOrDefault();
+            if(avatar != null)
+            {
+                db.Avatars.Remove(avatar);
+                db.SaveChanges();
+            }
             this.client.socket.Send(Convert.FromHexString("0A00051100000000DF54"));
         }
 

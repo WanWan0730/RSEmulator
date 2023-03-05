@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RSLIB
 {
-    public class NetworkPacket
+    public class NetworkSecurity
     {
         private readonly uint[] EncryptionKey = new uint[] { 0x6F, 0x40 };
         private const uint RANDOM_OFFSET = 0x7C;
@@ -18,7 +18,7 @@ namespace RSLIB
         public uint cipherId;
         private byte[] cipher;
 
-        public NetworkPacket(byte[] data)
+        public NetworkSecurity(byte[] data)
         {
             cipher = data;
             packetLength = Helper.GetBytesFromBegin(cipher, PACKET_SIZE);
